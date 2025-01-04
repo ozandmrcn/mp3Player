@@ -40,6 +40,7 @@ img {
 
 #playlist {
   float: right;
+  cursor: pointer;
 }
 
 .song-details {
