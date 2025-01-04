@@ -9,7 +9,6 @@ const songArtist = document.getElementById("song-artist");
 const pauseButton = document.getElementById("pause");
 const playButton = document.getElementById("play");
 const playListButton = document.getElementById("playlist");
-
 const maxDuration = document.getElementById("max-duration");
 const currentTimeRef = document.getElementById("current-time");
 
@@ -24,6 +23,7 @@ let index;
 
 let loop = true;
 
+// array of song objects
 const songList = [
   {
     name: "Gelo Ew Ki Bu",
@@ -57,6 +57,7 @@ const songList = [
   },
 ];
 
+// set the currently playing song
 const setSong = (arrayIndex) => {
   let { name, link, artist, image } = songList[arrayIndex];
   audio.src = link;
@@ -76,22 +77,21 @@ const setSong = (arrayIndex) => {
   playAudio();
 };
 
+// play the currently selected song
 const playAudio = () => {
   audio.play();
   pauseButton.classList.remove("hide");
   playButton.classList.add("hide");
 };
 
-audio.onended = () => {
-  nextSong();
-};
-
+// pause the currently selected song
 const pauseAudio = () => {
   audio.pause();
   pauseButton.classList.add("hide");
   playButton.classList.remove("hide");
 };
 
+// play the next song in the playlist
 const nextSong = () => {
   if (loop) {
     if (index == songList.length - 1) {
@@ -109,6 +109,7 @@ const nextSong = () => {
   playAudio();
 };
 
+// play the previous song in the playlist
 const prevSong = () => {
   if (index > 0) {
     index -= 1;
@@ -119,6 +120,7 @@ const prevSong = () => {
   playAudio();
 };
 
+// format time in minutes and seconds
 const timeFormatter = (timeInput) => {
   let minute = Math.floor(timeInput / 60);
   minute = minute < 10 ? "0" + minute : minute;
@@ -127,6 +129,7 @@ const timeFormatter = (timeInput) => {
   return `${minute}:${second}`;
 };
 
+// toggle repeat button
 repeatButton.addEventListener("click", () => {
   if (repeatButton.classList.contains("active")) {
     repeatButton.classList.remove("active");
@@ -137,6 +140,7 @@ repeatButton.addEventListener("click", () => {
   }
 });
 
+// toggle shuffle button
 shuffleButton.addEventListener("click", () => {
   if (shuffleButton.classList.contains("active")) {
     shuffleButton.classList.remove("active");
@@ -147,20 +151,24 @@ shuffleButton.addEventListener("click", () => {
   }
 });
 
+// update the current time every second
 setInterval(() => {
   currentTimeRef.innerHTML = timeFormatter(audio.currentTime);
   currentProgress.style.width =
     ((audio.currentTime / audio.duration) * 100).toFixed(2) + "%";
 }, 1000);
 
+// show the playlist
 playListButton.addEventListener("click", () => {
   playListContainer.classList.remove("hide");
 });
 
+// hide the playlist
 closeButton.addEventListener("click", () => {
   playListContainer.classList.add("hide");
 });
 
+// initialize the playlist
 const initializePlaylist = () => {
   for (let i in songList) {
     playListSongs.innerHTML += `<li class="playlistSong"
@@ -180,6 +188,7 @@ const initializePlaylist = () => {
   }
 };
 
+// update the progress bar when the user clicks on it
 progressBar.addEventListener("click", (event) => {
   let coordStart = progressBar.getBoundingClientRect().left;
 
@@ -196,10 +205,17 @@ progressBar.addEventListener("click", (event) => {
   playButton.classList.add("hide");
 });
 
+// update the current time when the audio time changes
 audio.addEventListener("timeupdate", () => {
   currentTimeRef.innerText = timeFormatter(audio.currentTime);
 });
 
+// play the next song when the audio ends
+audio.onended = () => {
+  nextSong();
+};
+
+// add event listeners to the next and previous buttons
 nextButton.addEventListener("click", nextSong);
 
 prevButton.addEventListener("click", prevSong);
@@ -208,6 +224,7 @@ pauseButton.addEventListener("click", pauseAudio);
 
 playButton.addEventListener("click", playAudio);
 
+// initialize the player
 window.onload = () => {
   index = 0;
   setSong(index);
