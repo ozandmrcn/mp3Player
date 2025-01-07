@@ -176,8 +176,12 @@ li {
 }
 
 #song-image {
-  height: 16rem;
+  height: 21rem;
   width: 21rem;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .playlist-song-details > span {
@@ -200,5 +204,38 @@ button.active i {
 @media screen and (max-width: 450px) {
   .music-player {
     font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 505px) {
+  #song-image {
+    height: 16rem;
+    width: 16rem;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  #song-image {
+    height: 12rem;
+    width: 12rem;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  #song-image {
+    height: 10rem;
+    width: 10rem;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
   }
 }
